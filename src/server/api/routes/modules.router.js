@@ -24,15 +24,13 @@ router.get("/:id", (req, res, next) => {
     if (!results.propertyIsEnumerable(0)) {
       res.status(404).send("Record not found");
     } else {
-      res.status(200).json(results);
+      res.status(200).json(results[0]);
     }
   });
 });
 
 // ENDPOINT: /api/modules/ :POST
 router.post("/", (req, res, next) => {
-  console.log(req.body);
-
   modulesController
     .createModule(req.body)
     .then(result => res.json(result))
@@ -47,9 +45,9 @@ router.post("/", (req, res, next) => {
 });
 
 // ENDPOINT: /api/modules/ :PATCH
-router.patch("/", (req, res, next) => {
+router.patch("/:id", (req, res, next) => {
   modulesController
-    .editModule({ body: req.body })
+    .editModule(req.params.id, req.body)
     .then(result => res.json(result))
     .catch(next);
 });

@@ -1,44 +1,98 @@
-.react-calendar-timeline .rct-item .rct-item-content {
-    border: dotted 1px deepskyblue;
-    overflow: visible;
-}
+section .react-calendar-timeline {
+    .rct-item {
+        background-color: transparent !important;
+        box-shadow: 0 2px 4px 0 rgba(29, 22, 24, 0.2);
+        border: 1px solid rgb(26, 111, 179) !important;
+        font-size: 1.5rem !important;
 
-.react-calendar-timeline .rct-horizontal-lines .rct-hl-even, .react-calendar-timeline .rct-horizontal-lines .rct-hl-odd {
-    border-bottom: none;
-}
+        &.has-teacher {
+            background-color: #8686f8 !important;
+        }
 
-.react-calendar-timeline .rct-horizontal-lines .rct-hl-even {
-    background-color: #ffffff;
-}
+        .rct-item-content {
+            overflow: visible;
+            color: black;
+            padding: 0 12px;
+        }
 
-.react-calendar-timeline .rct-sidebar .rct-sidebar-row {
-    border-bottom: none;
-}
+        button {
+            width: 50px;
+            border: none;
+            height: 40px;
+            box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: .025em;
+            color: #fff;
+            transition: all .15s ease;
+            text-shadow: 0 1px 3px rgba(36,180,126,.4);
+            outline: none;
+            cursor: pointer;
+            line-height: 1.5rem;
+            margin: 0 auto 24px;
+            background: #3ecf8e;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
 
-.react-calendar-timeline .rct-header .rct-label {
-    border-bottom: none
-}
+            &:hover {
+                box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+            }
 
-.react-calendar-timeline .rct-vertical-lines .rct-vl.rct-vl-first {
-    border-color: #ccc;
-}
+            &:active {
+                box-shadow: 0 6px 12px -2px rgba(50,50,93,.25), 0 3px 7px -3px rgba(0,0,0,.3);
+            }
+        }
+    }
 
-.react-calendar-timeline .rct-vertical-lines .rct-vl {
-    border-left: 1px solid #eeeeee87;
-}
+    .rct-horizontal-lines .rct-hl-even, .react-calendar-timeline .rct-horizontal-lines .rct-hl-odd {
+        border-bottom: none;
+    }
 
-.react-calendar-timeline .rct-header .rct-label-group {
-    font-family: 'Work Sans', sans-serif;
-    background: #eee;
-    color: #000;
-    font-size: 1rem;
-}
+    .rct-horizontal-lines .rct-hl-even {
+        background-color: #ffffff;
+    }
 
-.react-calendar-timeline .rct-sidebar-header {
-    background: #eee;
-    color: #000;
-    text-align: center;
-    padding-top: 1rem;
-    border: none;
-    border-right: solid 2px #ccc !important;
-}
+    .rct-sidebar .rct-sidebar-row {
+        border-bottom: none;
+    }
+
+    .rct-header .rct-label {
+        border-bottom: none
+    }
+
+    .rct-vertical-lines .rct-vl.rct-vl-first {
+        border-color: #ccc;
+    }
+
+    .rct-vertical-lines .rct-vl {
+        border-left: 1px solid #eeeeee87;
+    }
+
+    .rct-header .rct-label-group {
+        font-family: 'Work Sans', sans-serif;
+        background: #eee;
+        color: #000;
+        font-size: 1rem;
+    }
+
+    .rct-sidebar-header {
+        background: #eee;
+        color: #000;
+        text-align: center;
+        padding-top: 1rem;
+        border: none;
+        border-right: solid 2px #ccc !important;
+    }
+} 
+ 
+ 
+
+
+
+
+
+
+

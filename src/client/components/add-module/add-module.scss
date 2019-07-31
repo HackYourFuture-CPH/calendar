@@ -1,7 +1,8 @@
 section.add-module {
-    width: 90%;
+    width: calc(100% - 48px);
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
 
     h1 {
         text-align: center;

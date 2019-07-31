@@ -31,39 +31,42 @@ class TimelineWrapper extends Component {
       .then(classes => this.context.state.setClasses(classes));
   }
 
-  handleClick(item, itemContext) {
+  handleClick(item) {
     this.context.state.setActiveModuleMenuId(item.id);
     const moduleMenuTriangleWidth = 20;
 
-    this.context.state.setModuleMenuPosition({
-      top: itemContext.dimensions.top,
-      left:
-        itemContext.dimensions.left +
-        itemContext.dimensions.width +
-        moduleMenuTriangleWidth
-    });
     this.context.state.setModuleMenuIsVisible(true);
+    console.log(item);
+
+    item.start_date = item.start_time.toISOString();
+    item.end_date = item.end_time.toISOString();
+
+    this.context.state.setModuleMenuActiveData(item);
   }
 
   itemRenderer({ item, itemContext, getItemProps, getResizeProps }) {
+    console.log(item);
+
     const resizeProps = getResizeProps();
 
+    const hasTeacherAssigned = item.teachers.length >= 1;
+
     const { left: leftResizeProps, right: rightResizeProps } = resizeProps;
+
     return (
-      <div {...getItemProps(item.itemProps)}>
+      <div
+        {...getItemProps(item.itemProps)}
+        className={`rct-item ${hasTeacherAssigned ? "has-teacher" : ""}`}
+      >
         {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : ""}
 
         <div
-          className={`rct-item-content ${
-            item.hasTeacherAssigned ? "has-teacher" : ""
-          }`}
+          className="rct-item-content"
           style={{ maxHeight: `${itemContext.dimensions.height}` }}
         >
-          {itemContext.title}
-          <button onClick={() => this.handleClick(item, itemContext)}>
-            Edit
-          </button>
+          {item.title}
         </div>
+        <button onClick={() => this.handleClick(item)}>Edit</button>
 
         {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : ""}
       </div>
@@ -82,9 +85,9 @@ class TimelineWrapper extends Component {
               defaultTimeEnd={moment(new Date()).add(2.5, "month")}
               itemRenderer={this.itemRenderer.bind(this)}
               lineHeight={100}
-            >
-              <ModuleMenu />
-            </Timeline>
+            />
+
+            <ModuleMenu />
           </React.Fragment>
         )}
       </MyContext.Consumer>

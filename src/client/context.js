@@ -9,18 +9,13 @@ class Provider extends Component {
     classes: [],
     moduleMenuIsVisible: false,
     moduleMenuActiveId: 1,
-    moduleMenuPosition: {
-      top: 0,
-      left: 0
-    },
-    setModuleMenuPosition: position =>
-      this.setState({ moduleMenuPosition: position }),
+    moduleMenuActiveData: {},
     setActiveModuleMenuId: id => this.setState({ activeModuleMenuId: id }),
+    setModuleMenuActiveData: moduleData =>
+      this.setState({ moduleMenuActiveData: moduleData }),
     setModuleMenuIsVisible: isVisible =>
       this.setState({ moduleMenuIsVisible: isVisible }),
     setModules: modules => {
-      console.log(modules);
-
       this.setState({
         modules: [
           ...modules.map(module => {
@@ -29,7 +24,8 @@ class Provider extends Component {
               group: module.class_id,
               title: module.title,
               start_time: moment(new Date(module.start_date)),
-              end_time: moment(new Date(module.end_date))
+              end_time: moment(new Date(module.end_date)),
+              teachers: module.teachers
             };
           })
         ]
@@ -50,6 +46,8 @@ class Provider extends Component {
   };
 
   render() {
+    console.log(this.state);
+
     return (
       <MyContext.Provider value={{ state: this.state }}>
         {this.props.children}

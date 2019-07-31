@@ -13,16 +13,52 @@ const moduleColumns = [
   "classes.title as class_title"
 ];
 
-const getModules = async params =>
-  knex("modules")
+const getModules = async params => {
+  const modulesWithClassInfo = await knex("modules")
     .join("classes", "modules.class_id", "=", "classes.id")
     .columns(moduleColumns);
 
+  const moduleTeachersPromises = modulesWithClassInfo.map(module =>
+    knex("module_teachers").where("module_teachers.module_id", module.id)
+  );
+
+  const moduleTeachers = await Promise.all(moduleTeachersPromises);
+
+  modulesWithClassInfo.forEach(
+    (module, i) => (module.teachers = moduleTeachers[i])
+  );
+
+  return modulesWithClassInfo;
+};
+
 const getModuleById = async moduleId => {
-  return knex("modules")
-    .join("classes", "modules.id", "=", "classes.id")
+  const modulesWithClassInfo = await knex("modules")
+    .join("classes", "modules.class_id", "=", "classes.id")
     .where("modules.id", moduleId)
     .columns(moduleColumns);
+
+  const moduleTeachersPromises = modulesWithClassInfo.map(module =>
+    knex("module_teachers").where("module_teachers.module_id", module.id)
+  );
+
+  const moduleTeachers = await Promise.all(moduleTeachersPromises);
+
+  modulesWithClassInfo.forEach(
+    (module, i) => (module.teachers = moduleTeachers[i])
+  );
+
+  return modulesWithClassInfo;
+};
+
+const editModule = async (moduleId, updatedModule) => {
+  return knex("modules")
+    .where({ id: moduleId })
+    .update({
+      title: updatedModule.title,
+      start_date: updatedModule.start_date,
+      end_date: updatedModule.end_date,
+      class_id: updatedModule.class_id
+    });
 };
 
 const deleteModule = async (modulesId, req) => {
@@ -66,5 +102,6 @@ module.exports = {
   getModules,
   getModuleById,
   deleteModule,
-  createModule
+  createModule,
+  editModule
 };
