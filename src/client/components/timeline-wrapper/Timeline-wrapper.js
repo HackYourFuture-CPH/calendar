@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import SundayMarker from "./sunday-marker";
+
 import "./timeline-wrapper.scss";
 
 import Timeline, {
@@ -80,17 +82,7 @@ class TimelineWrapper extends Component {
               lineHeight={100}
             >
               <TimelineMarkers>
-                {/* <CustomMarker date={new Date().getTime()}>
-                  {({ styles, date }) => (
-                    <div
-                      style={{
-                        ...styles,
-                        width: "0.5rem",
-                        backgroundColor: "rgba(255,0,0,0.5)"
-                      }}
-                    />
-                  )}
-                </CustomMarker> */}
+                <SundayMarker />
               </TimelineMarkers>
             </Timeline>
 
