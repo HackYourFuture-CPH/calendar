@@ -51,14 +51,55 @@ const getModuleById = async moduleId => {
 };
 
 const editModule = async (moduleId, updatedModule) => {
-  return knex("modules")
-    .where({ id: moduleId })
-    .update({
-      title: updatedModule.title,
-      start_date: updatedModule.start_date,
-      end_date: updatedModule.end_date,
-      class_id: updatedModule.class_id
-    });
+  const databaseUpdations = [];
+  databaseUpdations.push(
+    knex("modules")
+      .where({ id: moduleId })
+      .update({
+        title: updatedModule.title,
+        start_date: updatedModule.start_date,
+        end_date: updatedModule.end_date,
+        class_id: updatedModule.class_id
+      })
+  );
+
+  if (updatedModule.teacher_1_module_teachers_id) {
+    databaseUpdations.push(
+      await knex("module_teachers")
+        .where({ id: updatedModule.teacher_1_module_teachers_id })
+        .update({
+          teacher_id: updatedModule.teacher_1
+        })
+    );
+  } else if (updatedModule.teacher_1) {
+    // should be done at the same time, teacher1 and teacher2 requests!
+    databaseUpdations.push(
+      knex("module_teachers").insert({
+        teacher_id: updatedModule.teacher_1,
+        module_id: moduleId
+      })
+    );
+  }
+
+  if (updatedModule.teacher_2_module_teachers_id) {
+    databaseUpdations.push(
+      knex("module_teachers")
+        .where({ id: updatedModule.teacher_2_module_teachers_id })
+        .update({
+          teacher_id: updatedModule.teacher_2
+        })
+    );
+  } else if (updatedModule.teacher_2) {
+    // should be done at the same time, teacher2 and teacher2 requests!
+    databaseUpdations.push(
+      knex("module_teachers").insert({
+        teacher_id: updatedModule.teacher_2,
+        module_id: moduleId
+      })
+    );
+  }
+
+  return Promise.all(databaseUpdations);
 };
 
 const deleteModule = async (modulesId, req) => {
@@ -68,8 +109,6 @@ const deleteModule = async (modulesId, req) => {
 };
 
 const createModule = async body => {
-  console.log(body);
-
   const [moduleId] = await knex("modules").insert({
     title: body.title,
     start_date: body.start_date,
@@ -79,7 +118,7 @@ const createModule = async body => {
 
   if (body.teacher_1) {
     // should be done at the same time, teacher1 and teacher2 requests!
-    const [teacher1Id] = await knex("module_teachers").insert({
+    await knex("module_teachers").insert({
       teacher_id: body.teacher_1,
       module_id: moduleId
     });
@@ -87,7 +126,7 @@ const createModule = async body => {
 
   if (body.teacher_2) {
     // should be done at the same time, teacher1 and teacher2 requests!
-    const [teacher1Id] = await knex("module_teachers").insert({
+    await knex("module_teachers").insert({
       teacher_id: body.teacher_2,
       module_id: moduleId
     });

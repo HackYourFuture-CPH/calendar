@@ -8,9 +8,7 @@ class Provider extends Component {
     modules: [],
     classes: [],
     moduleMenuIsVisible: false,
-    moduleMenuActiveId: 1,
     moduleMenuActiveData: {},
-    setActiveModuleMenuId: id => this.setState({ activeModuleMenuId: id }),
     setModuleMenuActiveData: moduleData =>
       this.setState({ moduleMenuActiveData: moduleData }),
     setModuleMenuIsVisible: isVisible =>
@@ -25,7 +23,8 @@ class Provider extends Component {
               title: module.title,
               start_time: moment(new Date(module.start_date)),
               end_time: moment(new Date(module.end_date)),
-              teachers: module.teachers
+              teachers: module.teachers,
+              class_id: module.class_id
             };
           })
         ]

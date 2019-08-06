@@ -4,23 +4,19 @@ import { Link } from "react-router-dom";
 
 import "./timeline-wrapper.scss";
 
-import Timeline from "react-calendar-timeline";
+import Timeline, {
+  TimelineMarkers,
+  TodayMarker,
+  CustomMarker
+} from "react-calendar-timeline";
 import "react-calendar-timeline/lib/Timeline.css";
 
 import moment from "moment";
-import ModuleMenu from "../moduleMenu/Module-menu";
+import ModuleMenu from "../module-menu/Module-menu";
 
 import { MyContext } from "../../context";
 
 class TimelineWrapper extends Component {
-  state = {
-    modules: [],
-    classes: [],
-    mousePosition: {},
-    moduleMenuPosition: {},
-    activeModuleId: 0
-  };
-
   componentDidMount() {
     fetch("api/modules")
       .then(response => response.json())
@@ -32,32 +28,29 @@ class TimelineWrapper extends Component {
   }
 
   handleClick(item) {
-    this.context.state.setActiveModuleMenuId(item.id);
-    const moduleMenuTriangleWidth = 20;
-
-    this.context.state.setModuleMenuIsVisible(true);
-    console.log(item);
-
     item.start_date = item.start_time.toISOString();
     item.end_date = item.end_time.toISOString();
 
+    this.context.state.setModuleMenuIsVisible(true);
     this.context.state.setModuleMenuActiveData(item);
   }
 
   itemRenderer({ item, itemContext, getItemProps, getResizeProps }) {
-    console.log(item);
-
     const resizeProps = getResizeProps();
 
     const hasTeacherAssigned = item.teachers.length >= 1;
 
     const { left: leftResizeProps, right: rightResizeProps } = resizeProps;
 
+    let className = "rct-item";
+    if (item.teachers.length === 1) {
+      className = `${className} one-teacher`;
+    } else if (item.teachers.length === 2) {
+      className = `${className} two-teachers`;
+    }
+
     return (
-      <div
-        {...getItemProps(item.itemProps)}
-        className={`rct-item ${hasTeacherAssigned ? "has-teacher" : ""}`}
-      >
+      <div {...getItemProps(item.itemProps)} className={className}>
         {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : ""}
 
         <div
@@ -85,7 +78,21 @@ class TimelineWrapper extends Component {
               defaultTimeEnd={moment(new Date()).add(2.5, "month")}
               itemRenderer={this.itemRenderer.bind(this)}
               lineHeight={100}
-            />
+            >
+              <TimelineMarkers>
+                {/* <CustomMarker date={new Date().getTime()}>
+                  {({ styles, date }) => (
+                    <div
+                      style={{
+                        ...styles,
+                        width: "0.5rem",
+                        backgroundColor: "rgba(255,0,0,0.5)"
+                      }}
+                    />
+                  )}
+                </CustomMarker> */}
+              </TimelineMarkers>
+            </Timeline>
 
             <ModuleMenu />
           </React.Fragment>

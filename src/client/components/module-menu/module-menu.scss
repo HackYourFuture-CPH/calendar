@@ -31,20 +31,9 @@ div.module-menu {
     }
 
     a {
-        display: block;
+        display: inline-block;
         line-height: 2rem;
         font-size: 1rem;
-    }
-
-    .arrow-left {
-        width: 0; 
-        height: 0; 
-        border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
-        border-right: 10px solid #b3b6b3;
-        position: absolute;
-        top: 0px;
-        left: -10px;
     }
 
     button.delete {

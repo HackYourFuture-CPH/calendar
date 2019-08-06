@@ -5,7 +5,11 @@ section .react-calendar-timeline {
         border: 1px solid rgb(26, 111, 179) !important;
         font-size: 1.5rem !important;
 
-        &.has-teacher {
+        &.one-teacher {
+            background-color: #dadaff !important;
+        }
+
+        &.two-teachers {
             background-color: #8686f8 !important;
         }
 

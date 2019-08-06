@@ -54,13 +54,9 @@ router.patch("/:id", (req, res, next) => {
 
 // ENDPOINT: /api/example/ :DELETE
 router.delete("/:id", (req, res, next) => {
-  console.log("delete module router");
-
   modulesController
     .deleteModule(req.params.id, req)
     .then(result => {
-      console.log(result);
-
       // If result is equal to 0, then that means the module id does not exist
       if (result === 0) {
         res.status(404).send("The module ID you provided does not exist.");
