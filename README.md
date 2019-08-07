@@ -121,6 +121,10 @@ Working with sql we use a tool called knex which helps with writing queries and 
 
 `knex seed:make 05_module_teachers`
 
+`knex migrate:make user`
+
+`knex seed:make 01_user`
+
 ## `Deployment`
 
 Navigate to project folder in your terminal:
