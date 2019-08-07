@@ -63,7 +63,10 @@ const editModule = async (moduleId, updatedModule) => {
       })
   );
 
-  if (updatedModule.teacher_1_module_teachers_id) {
+  if (
+    updatedModule.teacher_1_module_teachers_id &&
+    updatedModule.teacher_1 !== ""
+  ) {
     databaseUpdations.push(
       await knex("module_teachers")
         .where({ id: updatedModule.teacher_1_module_teachers_id })
@@ -71,7 +74,7 @@ const editModule = async (moduleId, updatedModule) => {
           teacher_id: updatedModule.teacher_1
         })
     );
-  } else if (updatedModule.teacher_1) {
+  } else if (updatedModule.teacher_1 && updatedModule.teacher_1 !== "") {
     // should be done at the same time, teacher1 and teacher2 requests!
     databaseUpdations.push(
       knex("module_teachers").insert({
@@ -81,7 +84,10 @@ const editModule = async (moduleId, updatedModule) => {
     );
   }
 
-  if (updatedModule.teacher_2_module_teachers_id) {
+  if (
+    updatedModule.teacher_2_module_teachers_id &&
+    updatedModule.teacher_2 !== ""
+  ) {
     databaseUpdations.push(
       knex("module_teachers")
         .where({ id: updatedModule.teacher_2_module_teachers_id })
@@ -89,7 +95,7 @@ const editModule = async (moduleId, updatedModule) => {
           teacher_id: updatedModule.teacher_2
         })
     );
-  } else if (updatedModule.teacher_2) {
+  } else if (updatedModule.teacher_2 && updatedModule.teacher_2 !== "") {
     // should be done at the same time, teacher2 and teacher2 requests!
     databaseUpdations.push(
       knex("module_teachers").insert({
