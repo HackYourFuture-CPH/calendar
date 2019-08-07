@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import SundayMarker from "./sunday-marker";
+import SundayMarker from "./Sunday-marker";
 
 import "./timeline-wrapper.scss";
 
@@ -29,15 +29,15 @@ class TimelineWrapper extends Component {
       .then(classes => this.context.state.setClasses(classes));
   }
 
-  handleClick(item) {
+  handleClick = item => {
     item.start_date = item.start_time.toISOString();
     item.end_date = item.end_time.toISOString();
 
     this.context.state.setModuleMenuIsVisible(true);
     this.context.state.setModuleMenuActiveData(item);
-  }
+  };
 
-  itemRenderer({ item, itemContext, getItemProps, getResizeProps }) {
+  itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
     const resizeProps = getResizeProps();
 
     const hasTeacherAssigned = item.teachers.length >= 1;
@@ -66,7 +66,7 @@ class TimelineWrapper extends Component {
         {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : ""}
       </div>
     );
-  }
+  };
 
   render() {
     return (
@@ -78,7 +78,7 @@ class TimelineWrapper extends Component {
               items={context.state.modules}
               defaultTimeStart={moment(new Date()).add(-0.5, "month")}
               defaultTimeEnd={moment(new Date()).add(2.5, "month")}
-              itemRenderer={this.itemRenderer.bind(this)}
+              itemRenderer={this.itemRenderer}
               lineHeight={100}
             >
               <TimelineMarkers>
