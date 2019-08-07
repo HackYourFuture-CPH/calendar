@@ -12,7 +12,7 @@ class SundaysMarker extends React.Component {
     for (let i = 1; i < 100; i++) {
       dates.push({
         id: i,
-        date: moment("2018/01/05").add(i * 7, "day")
+        date: moment("2019/01/06").add(i * 7, "day")
       });
       this.setState({ markerDates: dates });
     }
